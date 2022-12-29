@@ -27,7 +27,7 @@ def academic_notice(num=1):
         # Parsing (Expect Attachments)
         testList = []
         for i in word:
-            testList.append(re.sub("\t|\n|\r", "", i.text.strip()).lstrip("번호").lstrip("제목").lstrip("첨부파일").lstrip("작성자").lstrip("작성일").lstrip("조회수"))
+            testList.append(re.sub("\t|\n|\r", "", i.text.strip()).replace("번호", "").replace("제목", "").replace("작성자", "").replace("작성일", " "))
 
         # Parsing (Attachment)
         attach = soup.select('.txt-l > a[href]')       # Attachments 
