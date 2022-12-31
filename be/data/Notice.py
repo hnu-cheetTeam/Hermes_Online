@@ -1,11 +1,12 @@
 import re
 import requests
+import json
 from bs4 import BeautifulSoup
 
 
 """This file is about Notice."""
 
-def academic_notice(num=1):
+def notice(num=1):
     """Returns parsed infomation about Notice
 
     Args:
@@ -14,7 +15,7 @@ def academic_notice(num=1):
     Returns:
         list : collecion of Dictionary that is Resulf of parsing for Notice
     """
-    notices = []
+    notices = {}
     academic ={}
     
     for page in range(num):
@@ -31,7 +32,7 @@ def academic_notice(num=1):
 
         # Parsing (Attachment)
         attach = soup.select('.txt-l > a[href]')       # Attachments 
-        
+        idx = 0
         for i in attach:
             href = i.attrs['href']
             rec = requests.get("http://hannam.ac.kr" + href)
@@ -61,13 +62,8 @@ def academic_notice(num=1):
                 'fileLink' : fileLinkDict
             }
             
-            notices.append(academic)
+            notices[idx] = academic
             testList = testList[6:]
-            
-            
+            idx += 1
+    
     return notices
-
-
-
-for post in academic_notice(1):
-    print(post)

@@ -1,24 +1,25 @@
 import re
 import requests
+import json
 from bs4 import BeautifulSoup
 
 
-"""This file is about Scholarship Notice."""
+"""This file is about Academic Notice."""
 
 def academic_notice(num=1):
-    """Returns parsed infomation about Scholarship Notice
+    """Returns parsed infomation about Academic Notice
 
     Args:
         num (int): number of page for parsing
         
     Returns:
-        list : collecion of Dictionary that is Resulf of parsing for Scholarship Notice
+        list : collecion of Dictionary that is Resulf of parsing for Accademic Notice
     """
-    notices = []
+    notices = {}
     academic ={}
     
     for page in range(num):
-        response = requests.get("http://hannam.ac.kr/kor/community/community_01_8.html?pPageNo="+str(page)+"&pRowCount=30&pPageNo=" +str(page+1))
+        response = requests.get("http://hannam.ac.kr/kor/guide/guide_02.html?pPageNo="+str(page)+"&pRowCount=30&pPageNo=" +str(page+1))
         html = response.text
         soup = BeautifulSoup(html, 'html.parser')
         word = soup.select('td')  # Excluding Attachments
@@ -31,7 +32,7 @@ def academic_notice(num=1):
 
         # Parsing (Attachment)
         attach = soup.select('.txt-l > a[href]')       # Attachments 
-        
+        idx = 0
         for i in attach:
             href = i.attrs['href']
             rec = requests.get("http://hannam.ac.kr" + href)
@@ -51,7 +52,7 @@ def academic_notice(num=1):
                 
             
             academic = {
-                'class' : '장학공지',              # Class
+                'class' : '학사공지',              # Class
                 'number' : testList[0],            # Number
                 'title' : testList[1],             # Title
                 'writer' : testList[3],            # Writer
@@ -61,13 +62,8 @@ def academic_notice(num=1):
                 'fileLink' : fileLinkDict
             }
             
-            notices.append(academic)
+            notices[idx] = academic
             testList = testList[6:]
-            
-            
+            idx += 1
+    
     return notices
-
-
-
-for post in academic_notice(1):
-    print(post)
