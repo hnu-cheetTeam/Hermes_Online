@@ -1,6 +1,6 @@
 import os
 import sys
-import json
+from datetime import date
 from fastapi import FastAPI
 sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname(__file__))))
 from pymongo import MongoClient
@@ -35,16 +35,38 @@ def setScholarship():
         print(f"key:{key} val:{val}")
         db["scholarship"].insert_one(val)
 
+# ========================================================================================
+# Root path
 @app.get('/')
 def mainView():
-    # print(db['academic'].find_one())
     return {"message": "hi hello"}
 
-@app.get('/auth/login')
+# ========================================================================================
+# Main View
+# - Login Feature
+# - Logout Feature
+# - RealTime post
+# - recent post
+
+def createAccount(profileImg_link:str, name:str, nickName:str, userId:str, userPw:str, studentCode:int, birth_year:int, birth_month:int, birth_day:int, email:str, keywords:list):
+    newUser = {}
+    userBirth = date(birth_year, birth_month, birth_day)
+    newUser['profileImg']=profileImg_link
+    newUser['name']=name
+    newUser['nickName']=nickName
+    newUser['userId']=userId
+    newUser['userPw']=userPw
+    newUser['studentCode']=studentCode
+    newUser['birth']=userBirth.isoformat()
+    newUser['email']=email
+    newUser['keywords']=keywords
+    return newUser
+
+@app.post('/auth/login')
 def login():
     pass
 
-@app.get('/auth/logout')
+@app.post('/auth/logout')
 def logout():
     pass
 
@@ -56,28 +78,60 @@ def update_realtimepost():
 def recentPost():
     pass
 
+# ========================================================================================
+# Academic Notice BoardView
 @app.get('/academic')
 def academic():
-    # setAcademic()
-    res = db['academic'].find_one()
-    print(type(res))
-    return json.dumps(res)
+    post = list(db['academic'].find({}, {"_id":0, "class":1, "number":1, "title":1, "writer":1, "dateCreated":1, "postLink":1, "fileName":1, "fileLink":1}))
+    info = createAccount("dummy profileImgLink", "super", "Administrator", "super", "1234", "10000000", 2023, 1, 1, "aaaa@aaaa", [])
+    db["user"].insert_one(info)
+    print(info)
+    return post
 
+# ========================================================================================
+# Notice BoardView
 @app.get('/notice')
 def notice():
-    # setNotice()
-    return {"message": "Academic Complete"}
+    post = list(db['notice'].find({}, {"_id":0, "class":1, "number":1, "title":1, "writer":1, "dateCreated":1, "postLink":1, "fileName":1, "fileLink":1}))
+    return post
 
+# ========================================================================================
+# Scholarship Notice BoardView
 @app.get('/scholarship')
 def scholarship():
-    # setScholarship()
-    return {"Contents": "test"}
+    post = list(db['scholarship'].find({}, {"_id":0, "class":1, "number":1, "title":1, "writer":1, "dateCreated":1, "postLink":1, "fileName":1, "fileLink":1}))
+    return post
 
+# ========================================================================================
+# Job Notice BoardView
 @app.get('/job')
 def job():
-    # setJob()
-    return {'Contents': "test"}
+    post = list(db['job'].find({}, {"_id":0, "class":1, "number":1, "title":1, "writer":1, "dateCreated":1, "postLink":1, "fileName":1, "fileLink":1}))
+    return post
 
+# ========================================================================================
+# MyPage View
+@app.get('/user/info')
+def readUserInfo():
+    pass
+
+@app.get('/user/edit')
+def editUserInfo():
+    pass
+
+# ========================================================================================
+# Setting View
+@app.post('/user/kw_regist')
+def regist_Keyword():
+    pass
+
+@app.get('/user/kw_read')
+def regist_Keyword():
+    pass
+
+@app.post('/user/kw_delete')
+def regist_Keyword():
+    pass
 
 if __name__=='__main__':
     app.run(debug=True)
