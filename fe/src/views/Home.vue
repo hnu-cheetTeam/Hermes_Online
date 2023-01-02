@@ -87,6 +87,7 @@
 </template>
 
 <script>
+import api from "@/api";
 import SearchBar from "../components/SearchBar";
 export default {
   name: "App",
@@ -94,24 +95,6 @@ export default {
   data: () => ({
     model: null,
     realtimePost: [
-      {
-        class: "공지게시판",
-        dateCreated: "2022-12-30 16:03",
-        title: "[중앙도서관] 북챌린지 참여하여 독서장학금 받아요!",
-        isFile: true,
-      },
-      {
-        class: "공지게시판",
-        dateCreated: "2022-12-30 16:03",
-        title: "[중앙도서관] 북챌린지 참여하여 독서장학금 받아요!",
-        isFile: false,
-      },
-      {
-        class: "공지게시판",
-        dateCreated: "2022-12-30 16:03",
-        title: "[중앙도서관] 북챌린지 참여하여 독서장학금 받아요!",
-        isFile: true,
-      },
       {
         class: "공지게시판",
         dateCreated: "2022-12-30 16:03",
@@ -128,6 +111,16 @@ export default {
       },
     ],
   }),
+  created() {
+    // 실시간 게시글
+    api.get("/main/realtimepost").then((res) => {
+      this.realtimePost = res.data;
+    });
+    // 최근 본 게시글
+    api.get("/main/recentpost").then((res) => {
+      this.recentPost = res.data;
+    });
+  },
 };
 </script>
 
