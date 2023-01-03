@@ -1,43 +1,29 @@
 def userEntity(user) -> dict:
     return {
         "id": str(user["_id"]),
-        "profileImg": user["profileImg"],
         "name": user["name"],
-        "nickName": user["nickName"],
         "email": user["email"],
-        "password": user["userPw"],
+        "photo": user["photo"],
         "verified": user["verified"],
-        "studentCode": user["studentCode"],
-        "birth": user["birth"],
-        "keywords": user["keywords"],
-        "recentPost": user["recentPost"],
-        "created_at": user["created_at"],
-        "updated_at": user["updated_at"]
+        "password": user["password"],
     }
+
 
 def userResponseEntity(user) -> dict:
     return {
         "id": str(user["_id"]),
-        "profileImg": user["profileImg"],
         "name": user["name"],
-        "nickName": user["nickName"],
         "email": user["email"],
-        "password": user["userPw"],
-        "studentCode": user["studentCode"],
-        "birth": user["birth"],
-        "keywords": user["keywords"],
-        "recentPost": user["recentPost"],
-        "created_at": user["created_at"],
-        "updated_at": user["updated_at"]
+        "photo": user["photo"],
     }
+
 
 def embeddedUserResponse(user) -> dict:
     return {
         "id": str(user["_id"]),
-        "profileImg": user["profileImg"],
         "name": user["name"],
-        "keywords": user["keywords"],
-        "recentPost": user["recentPost"]
+        "email": user["email"],
+        "photo": user["photo"]
     }
 
 def userListEntity(users) -> list:

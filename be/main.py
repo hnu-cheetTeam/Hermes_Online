@@ -6,7 +6,6 @@ from fastapi.middleware.cors import CORSMiddleware
 from config import settings
 from auth import router as auth_router
 from user import router as user_router
-# import routers.auth, routers.user
 from crud.crud_user import (createAccount, createSuperAccount)
 from data import Academic_Notice, Job_Notice, Notice, Scholarship_Notice
 from db.database import (db, setAcademic, setJob, setNotice, setScholarship)
@@ -31,6 +30,12 @@ app.include_router(user_router, tags=['Users'], prefix='/api/users')
 @app.get('/')
 @app.get('/main')
 def mainView():
+    # createAccount("Dummpy 01", "user1", "user1", "1234", "10000000", 2023, 1, 1, "aaaa@aaaa.com", [], [])
+    # createAccount("Dummpy 02", "user2", "user2", "1234", "10000001", 2022, 1, 1, "Vvvv@aaaa.com", [], [])
+    # setAcademic()
+    setNotice()
+    setJob()
+    setScholarship()
     return "FEVER Time"
 
 # ========================================================================================

@@ -28,11 +28,11 @@ async def create_user(payload: CreateUserSchema):
     #  Hash the password
     payload.password = utils.hash_password(payload.password)
     del payload.passwordConfirm
-    payload.role = 'user'
+    # payload.role = 'user'
     payload.verified = True
     payload.email = payload.email.lower()
-    payload.created_at = datetime.utcnow()
-    payload.updated_at = payload.created_at
+    # payload.created_at = datetime.utcnow()
+    # payload.updated_at = payload.created_at
     result = User.insert_one(payload.dict())
     new_user = userResponseEntity(User.find_one({'_id': result.inserted_id}))
     return {"status": "success", "user": new_user}
