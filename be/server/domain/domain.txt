@@ -1,8 +1,0 @@
-https://wikidocs.net/175950
-
-예를 들어 질문(domain/question) 도메인이라면 다음의 3개 파일이 필요하다.
-
-question_router.py - 라우터 파일
-question_crud.py - 데이터베이스 처리 파일
-question_schema.py - 입출력 관리 파일
-frontend
