@@ -42,7 +42,7 @@ def scholarship_notice(num=1):
 
             fileNameDict = {}
             fileLinkDict = {}
-            
+            recentReadUser = {}
             i = 0 
             while (i < len(pdf)):
                 tmpPdf = "http"+ ((pdf[i].attrs['href']).lstrip("../include/board_down.php?s_filepath="))
@@ -59,7 +59,8 @@ def scholarship_notice(num=1):
                 'dateCreated' : testList[4],       # dateCreated
                 'postLink' : "http://hannam.ac.kr" + href,
                 'fileName' : fileNameDict,
-                'fileLink' : fileLinkDict
+                'fileLink' : fileLinkDict,
+                'recentReadUser' : recentReadUser
             }
             
             notices[idx] = academic

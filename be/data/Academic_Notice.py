@@ -42,6 +42,7 @@ def academic_notice(num=1):
 
             fileNameDict = {}
             fileLinkDict = {}
+            recentReadUser = {}
             
             i = 0 
             while (i < len(pdf)):
@@ -59,7 +60,8 @@ def academic_notice(num=1):
                 'dateCreated' : testList[4],       # dateCreated
                 'postLink' : "http://hannam.ac.kr" + href,
                 'fileName' : fileNameDict,
-                'fileLink' : fileLinkDict
+                'fileLink' : fileLinkDict,
+                'recentReadUser' : recentReadUser
             }
             
             notices[idx] = academic
