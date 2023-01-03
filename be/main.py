@@ -22,20 +22,18 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-app.include_router(auth_router, tags=['Auth'], prefix='/api/auth')
-app.include_router(user_router, tags=['Users'], prefix='/api/users')
+app.include_router(auth_router, tags=['Auth'], prefix='/auth')
+app.include_router(user_router, tags=['Users'], prefix='/user')
 
 # ========================================================================================
 # Root path
 @app.get('/')
 @app.get('/main')
 def mainView():
-    # createAccount("Dummpy 01", "user1", "user1", "1234", "10000000", 2023, 1, 1, "aaaa@aaaa.com", [], [])
-    # createAccount("Dummpy 02", "user2", "user2", "1234", "10000001", 2022, 1, 1, "Vvvv@aaaa.com", [], [])
     # setAcademic()
-    setNotice()
-    setJob()
-    setScholarship()
+    # setNotice()
+    # setJob()
+    # setScholarship()
     return "FEVER Time"
 
 # ========================================================================================
@@ -49,61 +47,33 @@ def mainView():
 def update_realtimepost():
     pass
 
-@app.get('/main/recentpost')
-def recentPost():
-    pass
-
 # ========================================================================================
 # Academic Notice BoardView
-@app.get('/academic')
+@app.get('/main/academic')
 def academic():
     post = list(db['academic'].find({}, {"_id":0, "class":1, "number":1, "title":1, "writer":1, "dateCreated":1, "postLink":1, "fileName":1, "fileLink":1}))
     return post
 
 # ========================================================================================
 # Notice BoardView
-@app.get('/notice')
+@app.get('/main/notice')
 def notice():
     post = list(db['notice'].find({}, {"_id":0, "class":1, "number":1, "title":1, "writer":1, "dateCreated":1, "postLink":1, "fileName":1, "fileLink":1}))
     return post
 
 # ========================================================================================
 # Scholarship Notice BoardView
-@app.get('/scholarship')
+@app.get('/main/scholarship')
 def scholarship():
     post = list(db['scholarship'].find({}, {"_id":0, "class":1, "number":1, "title":1, "writer":1, "dateCreated":1, "postLink":1, "fileName":1, "fileLink":1}))
     return post
 
 # ========================================================================================
 # Job Notice BoardView
-@app.get('/job')
+@app.get('/main/job')
 def job():
     post = list(db['job'].find({}, {"_id":0, "class":1, "number":1, "title":1, "writer":1, "dateCreated":1, "postLink":1, "fileName":1, "fileLink":1}))
     return post
-
-# ========================================================================================
-# MyPage View
-@app.get('/user/info')
-def readUserInfo():
-    pass
-
-@app.get('/user/edit')
-def editUserInfo():
-    pass
-
-# ========================================================================================
-# Setting View
-@app.post('/user/kw_regist')
-def regist_Keyword():
-    pass
-
-@app.get('/user/kw_read')
-def regist_Keyword():
-    pass
-
-@app.post('/user/kw_delete')
-def regist_Keyword():
-    pass
 
 if __name__=='__main__':
     app.run(debug=True)
