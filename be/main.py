@@ -8,7 +8,7 @@ from auth import router as auth_router
 from user import router as user_router
 from crud.crud_user import (createAccount, createSuperAccount)
 from data import Academic_Notice, Job_Notice, Notice, Scholarship_Notice
-from db.database import (db, setAcademic, setJob, setNotice, setScholarship)
+from db.database import (db, set_AllRecentPost, set_RecentAcademic, set_RecentJob, set_RecentNotice, set_RecentScholarship)
 
 app = FastAPI()
 
@@ -30,10 +30,11 @@ app.include_router(user_router, tags=['Users'], prefix='/user')
 @app.get('/')
 @app.get('/main')
 def mainView():
-    # setAcademic()
-    # setNotice()
-    # setJob()
-    # setScholarship()
+    # set_AllRecentPost()
+    # set_RecentAcademic()
+    # set_RecentScholarship()
+    # set_RecentJob()
+    # set_RecentNotice()
     return "FEVER Time"
 
 # ========================================================================================
