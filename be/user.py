@@ -39,6 +39,7 @@ def regist_Keyword(keywords:str, user_id: str = Depends(oauth2.require_user)):
 @router.get('/kw_read', response_model=schemas.UserKeywords)
 def read_Keyword(user_id: str = Depends(oauth2.require_user)):
     user = userResponseEntity(database.User.find_one({'_id': ObjectId(str(user_id))}))
+    print(str(user_id))
     print(user["keywords"])
     return {"status": "success", "user": user}
 
