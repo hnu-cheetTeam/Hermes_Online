@@ -27,6 +27,12 @@ def userResponseEntity(user) -> dict:
         "recentpost": user["recentpost"]
     }
 
+def userDetailEntity(user) -> dict:
+    return {
+        "id": str(user["_id"]),
+        "keywords": user["keywords"]
+    }
+
 
 def embeddedUserResponse(user) -> dict:
     return {
@@ -40,3 +46,4 @@ def embeddedUserResponse(user) -> dict:
 
 def userListEntity(users) -> list:
     return [userEntity(user) for user in users]
+
