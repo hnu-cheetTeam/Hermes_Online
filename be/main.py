@@ -1,13 +1,7 @@
-# import os
-# import sys
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-# sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname(__file__))))
-from config import settings
 from auth import router as auth_router
 from user import router as user_router
-from crud.crud_user import (createAccount, createSuperAccount)
-from data import Academic_Notice, Job_Notice, Notice, Scholarship_Notice
 from db.database import (db, set_AllRecentPost, set_RecentAcademic, set_RecentJob, set_RecentNotice, set_RecentScholarship)
 
 app = FastAPI()
@@ -30,23 +24,27 @@ app.include_router(user_router, tags=['Users'], prefix='/user')
 @app.get('/')
 @app.get('/main')
 def mainView():
-    # set_AllRecentPost()
-    # set_RecentAcademic()
-    # set_RecentScholarship()
-    # set_RecentJob()
-    # set_RecentNotice()
     return "FEVER Time"
 
 # ========================================================================================
 # Main View
 # - Login Feature
 # - Logout Feature
-# - RealTime post
-# - recent post
+# - Update Each board post
+# - Recent All type post
 
-@app.get('/main/realtimepost')
-def update_realtimepost():
-    pass
+@app.get('/main/updateallpost')
+def updateAlltype_Post():
+    all_recent_post = set_AllRecentPost()
+    return all_recent_post
+
+@app.get('/main/updatepost')
+def update_Post():
+    recentAcademic = set_RecentAcademic()
+    recentScholarship = set_RecentScholarship()
+    recentJob = set_RecentJob()
+    recentNotice = set_RecentNotice()
+    return [recentAcademic, recentScholarship, recentJob, recentNotice]
 
 # ========================================================================================
 # Academic Notice BoardView

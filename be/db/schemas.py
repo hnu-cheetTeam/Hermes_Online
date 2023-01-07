@@ -1,5 +1,6 @@
 from datetime import datetime
 from pydantic import BaseModel, EmailStr, constr
+from bson.objectid import ObjectId
 
 class UserBaseSchema(BaseModel):
     name: str
@@ -9,7 +10,6 @@ class UserBaseSchema(BaseModel):
     created_at: datetime or None = None
     updated_at: datetime or None = None
     keywords: str
-    recentpost: str
     class Config:
         orm_mode = True
 
@@ -48,7 +48,3 @@ class UserResponseKeywords(UserInfoBaseSchema):
 class UserKeywords(BaseModel):
     status: str
     user: UserResponseKeywords
-
-class UserPosts(BaseModel):
-    status: str
-    user: UserPostBaseSchema
