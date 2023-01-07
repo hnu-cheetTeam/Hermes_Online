@@ -10,6 +10,7 @@ class UserBaseSchema(BaseModel):
     created_at: datetime or None = None
     updated_at: datetime or None = None
     keywords: str
+    recentpost: str
     class Config:
         orm_mode = True
 
